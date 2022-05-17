@@ -6,10 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "next lint src --max-warnings=0",
     "prepare": "husky install",
     "precommit": "yarn lint-staged && yarn test",
-    "test": "jest --watch"
+    "test": "jest"
   },
   "dependencies": {
     "next": "12.1.6",

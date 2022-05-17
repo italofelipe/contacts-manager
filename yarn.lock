@@ -303,7 +303,7 @@
 
 "@commitlint/cli@^17.0.0":
   version "17.0.0"
-  resolved "https://registry.npmjs.org/@commitlint/cli/-/cli-17.0.0.tgz"
+  resolved "https://registry.yarnpkg.com/@commitlint/cli/-/cli-17.0.0.tgz#6c86c6b0eba4ba1204a19833c3c962b623f35518"
   integrity sha512-Np6slCdVVG1XwMvwbZrXIzS1INPAD5QmN4L6al04AmCd4nAPU63gxgxC5Mz0Fmx7va23Uvb0S7yEFV1JPhvPUQ==
   dependencies:
     "@commitlint/format" "^17.0.0"
@@ -318,7 +318,7 @@
 
 "@commitlint/config-conventional@^17.0.0":
   version "17.0.0"
-  resolved "https://registry.npmjs.org/@commitlint/config-conventional/-/config-conventional-17.0.0.tgz"
+  resolved "https://registry.yarnpkg.com/@commitlint/config-conventional/-/config-conventional-17.0.0.tgz#7dc2ef3ac1a11ff62bcd333343cc8921edd1646a"
   integrity sha512-jttJXBIq3AuQCvUVwxSctCwKfHxxbALE0IB9OIHYCu/eQdOzPxN72pugeZsWDo1VK/T9iFx+MZoPb6Rb1/ylsw==
   dependencies:
     conventional-changelog-conventionalcommits "^4.3.1"
