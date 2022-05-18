@@ -19,8 +19,11 @@ jobs:
       - name: Linting
         run: yarn lint
 
-      - name: Test
+      - name: Unit Test
         run: yarn test
+
+      - name: Integration Test
+        run: yarn cy
 
       - name: Build
         run: yarn build
