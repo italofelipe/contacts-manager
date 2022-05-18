@@ -24,10 +24,10 @@ jobs:
 
       - name: Integration Test
         uses: cypress-io/github-action@v2
-        run: yarn cy
-          with:
+        with:
             build: yarn build
             start: yarn start
+        run: yarn cy
 
       - name: Build
         run: yarn build
