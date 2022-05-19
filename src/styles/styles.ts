@@ -3,20 +3,32 @@ import styled from "styled-components";
 type Align = "center" | "left" | "right";
 const FormWrapper = styled.form`
   display: flex;
+  flex-flow: column;
 `;
 
-const AddButton = styled.button`
-  padding: 1em 2em;
+type IButton = {
+  context: "create" | "add";
+};
+const Button = styled.button<IButton>`
+  padding: 0.6em 2em;
   font-size: 1em;
-  background: #64b5f6;
+  background: ${({ context }) => (context === "add" ? "#64b5f6" : "#43A047")};
   color: #fafafa;
+  font-weight: bold;
   max-width: 150px;
-  border-radius: 4px;
+  border-radius: 6em;
   border: none;
   &:hover {
     cursor: pointer;
-    background: #1e88e5;
+    background: ${({ context }) =>
+      context === "add" ? "##1e88e5" : "#2E7D32"};
+
     box-shadow: 1px 2px 4px 1px #9e9e9e;
+  }
+  &:disabled {
+    background: #9e9e9e;
+    cursor: default;
+    pointer-events: none;
   }
 `;
 
@@ -40,15 +52,18 @@ const Container = styled.div`
 
 type IBox = {
   w: "full" | "part";
+  disabled: boolean;
 };
 const Box = styled.div<IBox>`
   display: flex;
+  width: ${({ w }) => (w === "full" ? "100%" : "70%")};
   flex-flow: column;
+  justify-content: space-between;
+  align-items: center;
   margin: 15px 10px;
   box-shadow: 0px 0px 12px 3px #dedede;
-  align-items: center;
-  justify-content: space-between;
-  width: ${({ w }) => (w === "full" ? "100%" : "70%")};
+  opacity: ${({ disabled }) => (disabled ? "0.45" : "unset")};
+  pointer-events: ${({ disabled }) => (disabled ? "none" : "unset")};
 `;
 
 type IText = {
@@ -85,11 +100,16 @@ const Text = styled.p<IText>`
   }};
 `;
 
-const Aside = styled.aside`
+type IAside = {
+  disabled: boolean;
+};
+const Aside = styled.aside<IAside>`
   height: 100vh;
   display: flex;
   width: 30vw;
   flex-flow: column;
+  opacity: ${({ disabled }) => (disabled ? "0.45" : "unset")};
+  pointer-events: ${({ disabled }) => (disabled ? "none" : "unset")};
 `;
 
 type ITitle = {
@@ -144,11 +164,15 @@ const ContactRight = styled.div`
   }
 `;
 
-const ContactPhotoContainer = styled.div`
-  width: 2em;
+type ContactPhotoContainerProps = {
+  photo: string;
+};
+const ContactPhotoContainer = styled.div<ContactPhotoContainerProps>`
+  width: 2.85em;
   border-radius: 50%;
-  height: 2em;
-  border: 2px solid red;
+  height: 2.85em;
+  background: url(${(props) => props.photo});
+  background-size: cover;
 `;
 
 const ContactCard = styled.div`
@@ -198,9 +222,38 @@ const ContactCardLower = styled.div`
     height: 3em;
   }
 `;
+const TextInput = styled.input`
+  background: none;
+  border: none;
+  border-bottom: 1px solid #9e9e9e;
+  margin: 15px 0;
+`;
+
+const CreateContactUpper = styled.div`
+  display: flex;
+  flex-flow: row;
+
+  svg {
+    max-width: 10px;
+    margin-top: 1.2em;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+`;
+const CreateContactInner = styled.div`
+  display: flex;
+  flex-flow: column;
+`;
+const CreateContactLower = styled.div`
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+`;
 
 export {
-  AddButton,
+  Button,
   AddContact,
   Aside,
   Box,
@@ -214,9 +267,13 @@ export {
   ContactRight,
   ContactPhotoContainer,
   Container,
+  CreateContactUpper,
+  CreateContactInner,
+  CreateContactLower,
   FormWrapper,
   H2Title,
   Text,
+  TextInput,
   TextContainer,
   Wrapper,
 };

@@ -4,10 +4,11 @@ import Head from "next/head";
 import Image from "next/image";
 import { useState } from "react";
 import ContactList from "../components/ContactList";
+import CreateContact from "../components/CreateContact";
 import {
-  AddButton,
   AddContact,
   Box,
+  Button,
   ContactCard,
   ContactCardInnerContent,
   ContactCardLower,
@@ -39,11 +40,12 @@ const Home = () => {
 
       <Wrapper>
         <ContactList
+          disabled={addContact}
           contacts={contactsMock}
           onSelect={(contact) => setSelectedContact(contact)}
         />
         <Container>
-          <Box w={addContact ? "part" : "full"}>
+          <Box w={addContact ? "part" : "full"} disabled={addContact}>
             <TextContainer>
               <H2Title align="center">Telephonist</H2Title>
               <Text align="center" size="md" variant="text">
@@ -103,19 +105,18 @@ const Home = () => {
                 height={400}
               />
             )}
-            <AddButton
+            <Button
+              context="add"
               onClick={() => setAddContact(!addContact)}
               data-testid="add-contact-button"
             >
               Add contact
-            </AddButton>
+            </Button>
           </Box>
 
           {addContact ? (
             <AddContact data-testid="add-contact">
-              <Text align="center" size="lg" variant="info">
-                Add a new contact
-              </Text>
+              <CreateContact onClose={() => setAddContact(false)} />
             </AddContact>
           ) : null}
         </Container>
