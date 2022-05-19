@@ -8,3 +8,10 @@ interface EnvironmentVariables {
   storageBucket: string;
   measurementId: string;
 };
+
+
+interface Contact {
+  name: string;
+  number: string;
+  email: string;
+}
