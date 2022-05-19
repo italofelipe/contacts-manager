@@ -1,16 +1,31 @@
+import { faClose, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Head from "next/head";
+import Image from "next/image";
 import { useState } from "react";
+import ContactList from "../components/ContactList";
 import {
   AddButton,
   AddContact,
   Box,
+  ContactCard,
+  ContactCardInnerContent,
+  ContactCardLower,
+  ContactCardUpper,
   Container,
+  H2Title,
   Text,
+  TextContainer,
   Wrapper
 } from "../styles/styles";
+import { contactsMock } from "../__mocks__/contactsMock";
+
+const addContactImage = "/assets/add_image.svg";
+const chatImage = "/assets/chat_image.svg";
 
 const Home = () => {
   const [addContact, setAddContact] = useState<boolean>(false);
+  const [selectedContact, setSelectedContact] = useState<Contact | null>(null);
   return (
     <>
       <Head>
@@ -23,31 +38,86 @@ const Home = () => {
       </Head>
 
       <Wrapper>
+        <ContactList
+          contacts={contactsMock}
+          onSelect={(contact) => setSelectedContact(contact)}
+        />
         <Container>
-          <h2>Telephonist</h2>
-          <Text size="xl" variant="text">
-            All your contacts in one place.
-          </Text>
-        </Container>
+          <Box w={addContact ? "part" : "full"}>
+            <TextContainer>
+              <H2Title align="center">Telephonist</H2Title>
+              <Text align="center" size="md" variant="text">
+                All your contacts in one place.
+              </Text>
+              <Text align="center" size="sm" variant="info">
+                To start, add a contact or select a contact to edit and see the
+                magic done!
+              </Text>
+            </TextContainer>
 
-        <Container>
-          <Box>
-            <Text size="sm" variant="info">
-              To start, add a contact or select a contact to edit and see the
-              magic done!
-            </Text>
-            <AddButton onClick={() => setAddContact(!addContact)}>
+            {addContact ? (
+              <Image
+                src={addContactImage}
+                alt="Add a contact image."
+                width={400}
+                height={400}
+              />
+            ) : selectedContact ? (
+              <>
+                <ContactCardUpper>
+                  <FontAwesomeIcon
+                    onClick={() => setSelectedContact(null)}
+                    icon={faClose}
+                    size="xs"
+                  />
+                </ContactCardUpper>
+                <ContactCard>
+                  <ContactCardInnerContent>
+                    <Text size="lg" align="center" variant="text">
+                      {selectedContact.name}
+                    </Text>
+                    <Text size="lg" align="center" variant="info">
+                      {selectedContact.phone}
+                    </Text>
+                    <Text size="lg" align="center" variant="info">
+                      {selectedContact.email}
+                    </Text>
+                  </ContactCardInnerContent>
+
+                  <ContactCardLower>
+                    <div>
+                      <FontAwesomeIcon
+                        onClick={() => setSelectedContact(null)}
+                        icon={faTrash}
+                        size="xs"
+                      />
+                    </div>
+                  </ContactCardLower>
+                </ContactCard>
+              </>
+            ) : (
+              <Image
+                src={chatImage}
+                alt="Manage contacts image."
+                width={400}
+                height={400}
+              />
+            )}
+            <AddButton
+              onClick={() => setAddContact(!addContact)}
+              data-testid="add-contact-button"
+            >
               Add contact
             </AddButton>
           </Box>
 
-          {addContact && (
-            <AddContact>
-              <Text size="lg" variant="info">
+          {addContact ? (
+            <AddContact data-testid="add-contact">
+              <Text align="center" size="lg" variant="info">
                 Add a new contact
               </Text>
             </AddContact>
-          )}
+          ) : null}
         </Container>
       </Wrapper>
     </>

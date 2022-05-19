@@ -7,11 +7,10 @@ interface EnvironmentVariables {
   projectId: string;
   storageBucket: string;
   measurementId: string;
-};
-
+}
 
 interface Contact {
   name: string;
-  number: string;
+  phone: string;
   email: string;
 }

@@ -9,4 +9,11 @@ describe("Test the index page", () => {
     });
     expect(screen.findByText("Telephonist")).toBeTruthy();
   });
+
+  it("Should display a new text once the Button is clicked", () => {
+    // const button = screen.getByRole("button");
+    const { container, getByTestId } = render(<Home />);
+    act(() => getByTestId("add-contact-button").click());
+    expect(container.getElementsByTagName("section")).toBeInTheDocument;
+  });
 });
