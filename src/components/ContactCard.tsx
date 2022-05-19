@@ -12,11 +12,11 @@ import {
 interface ContactCardProps extends Contact {
   onSelect: () => void;
 }
-const ContactCard = ({ name, email, phone, onSelect }: ContactCardProps) => {
+const ContactCard = ({ name, email, phone, imageUrl, onSelect }: ContactCardProps) => {
   return (
     <Contact onClick={onSelect}>
       <ContactLeft>
-        <ContactPhotoContainer />
+        <ContactPhotoContainer photo={imageUrl} />
       </ContactLeft>
       <ContactCenter>
         <Text align="left" size="md" variant="text">

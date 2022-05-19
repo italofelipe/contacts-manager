@@ -4,17 +4,19 @@ import ContactCard from "./ContactCard";
 interface ContactListProps {
   contacts: Contact[];
   onSelect: (contact: Contact) => void;
+  disabled: boolean;
 }
-const ContactList = ({ contacts, onSelect }: ContactListProps) => {
+const ContactList = ({ contacts, disabled, onSelect }: ContactListProps) => {
   return (
     <>
-      <Aside>
+      <Aside disabled={disabled}>
         <Text align="left" size="md" variant="text">
           Contacts
         </Text>
         <ul>
           {contacts.map((contact, index) => (
             <ContactCard
+              imageUrl={contact.imageUrl}
               email={contact.email}
               name={contact.name}
               phone={contact.phone}
