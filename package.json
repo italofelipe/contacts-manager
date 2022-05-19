@@ -11,11 +11,16 @@
     "precommit": "yarn lint-staged && yarn test",
     "test": "jest",
     "test:coverage": "jest --coverage=true",
+    "test:watch": "jest --watch",
     "cy": "cypress open",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.1.1",
+    "@fortawesome/free-regular-svg-icons": "^6.1.1",
+    "@fortawesome/free-solid-svg-icons": "^6.1.1",
+    "@fortawesome/react-fontawesome": "^0.1.18",
     "firebase": "^9.8.1",
     "next": "12.1.6",
     "react": "18.1.0",
@@ -58,6 +63,8 @@
     "jest": "^28.1.0",
     "jest-environment-jsdom": "^28.1.0",
     "lint-staged": "^12.4.1",
+    "local-cypress": "^1.2.5",
+    "postinstall-postinstall": "^2.1.0",
     "prettier": "^2.6.2",
     "typescript": "^4.6.4"
   }
