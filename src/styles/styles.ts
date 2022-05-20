@@ -68,7 +68,7 @@ const Box = styled.div<IBox>`
 
 type IText = {
   size: "sm" | "md" | "lg" | "xl";
-  variant: "text" | "danger" | "info" | "warning";
+  variant: "text" | "danger" | "info" | "warning" | "white";
   align: Align;
 };
 const Text = styled.p<IText>`
@@ -94,6 +94,8 @@ const Text = styled.p<IText>`
         return "#EF5350";
       case "warning":
         return "#FFA726";
+      case "white":
+        return "#F5F5F5";
       default:
         return "#9E9E9E";
     }
@@ -252,6 +254,20 @@ const CreateContactLower = styled.div`
   align-items: center;
 `;
 
+const ModalHeader = styled.div`
+  width: 100%;
+  display: flex;
+  flex-flow: row;
+  justify-content: flex-end;
+  svg {
+    max-width: 10px;
+    fill: #f5f5f5;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+`;
+
 export {
   Button,
   AddContact,
@@ -272,6 +288,7 @@ export {
   CreateContactLower,
   FormWrapper,
   H2Title,
+  ModalHeader,
   Text,
   TextInput,
   TextContainer,
