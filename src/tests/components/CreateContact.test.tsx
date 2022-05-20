@@ -1,8 +1,9 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { act } from "react-dom/test-utils";
-import CreateContact from "../components/CreateContact";
+import CreateContact from "../../components/CreateContact";
 
 describe("Test CreateContact component", () => {
+  
   it("Should render CreateContact component", async () => {
     act(() => {
       render(<CreateContact onClose={() => jest.fn} />);
@@ -19,6 +20,8 @@ describe("Test CreateContact component", () => {
     fireEvent.change(nameInput, { target: { value: "Thanos" } });
     fireEvent.change(emailInput, { target: { value: "thanos@darkorder.unv" } });
     fireEvent.change(phoneInput, { target: { value: "5512135" } });
+    fireEvent.click(createButton)
     expect(createButton).toBeEnabled;
+    
   });
 });
