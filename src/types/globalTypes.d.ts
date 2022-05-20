@@ -9,9 +9,19 @@ interface EnvironmentVariables {
   measurementId: string;
 }
 
-interface Contact {
+interface Contact extends ContactFields {
+  imageUrl?: string;
+  id?: string;
+}
+
+interface ContactFields {
   name: string;
   phone: string;
   email: string;
-  imageUrl: string;
+}
+
+interface IRequestData {
+  response: unknown;
+  error: unknown;
+  loading: boolean;
 }
