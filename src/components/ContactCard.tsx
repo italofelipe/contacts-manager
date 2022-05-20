@@ -9,14 +9,20 @@ import {
   Text
 } from "../styles/styles";
 
-interface ContactCardProps extends Contact {
+interface ContactCardProps extends Omit<Contact, "id"> {
   onSelect: () => void;
 }
-const ContactCard = ({ name, email, phone, imageUrl, onSelect }: ContactCardProps) => {
+const ContactCard = ({
+  name,
+  email,
+  phone,
+  imageUrl,
+  onSelect,
+}: ContactCardProps) => {
   return (
     <Contact onClick={onSelect}>
       <ContactLeft>
-        <ContactPhotoContainer photo={imageUrl} />
+        <ContactPhotoContainer photo={imageUrl!} />
       </ContactLeft>
       <ContactCenter>
         <Text align="left" size="md" variant="text">
