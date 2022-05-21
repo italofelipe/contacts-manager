@@ -6,7 +6,7 @@ import { ModalHeader, Text } from "../styles/styles";
 type ModalProps = {
   title: string;
   text: string;
-  isOpen: boolean;
+  isOpen: boolean | null;
   onClose: (status: boolean) => void;
 };
 
@@ -26,10 +26,10 @@ const customStyles = {
 
 const Modal = ({ title, text, isOpen, onClose }: ModalProps) => {
   return (
-    <ReactModal style={customStyles} isOpen={isOpen}>
+    <ReactModal style={customStyles} isOpen={isOpen!}>
       <ModalHeader>
         <FontAwesomeIcon
-          onClick={() => onClose(isOpen)}
+          onClick={() => onClose(isOpen!)}
           icon={faClose}
           size="xs"
           fill="#F5F5F5"

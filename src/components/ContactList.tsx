@@ -14,16 +14,22 @@ const ContactList = ({ contacts, disabled, onSelect }: ContactListProps) => {
           Contacts
         </Text>
         <ul>
-          {contacts.map((contact, index) => (
-            <ContactCard
-              imageUrl={contact.imageUrl}
-              email={contact.email}
-              name={contact.name}
-              phone={contact.phone}
-              onSelect={() => onSelect(contact)}
-              key={contact.phone}
-            />
-          ))}
+          {contacts.length > 0 ? (
+            contacts.map((contact) => (
+              <ContactCard
+                imageUrl={contact.imageUrl}
+                email={contact.email}
+                name={contact.name}
+                phone={contact.phone}
+                onSelect={() => onSelect(contact)}
+                key={contact.phone}
+              />
+            ))
+          ) : (
+            <Text align="left" size="md" variant="info">
+              No contacts yet. Insert one.
+            </Text>
+          )}
         </ul>
       </Aside>
     </>
