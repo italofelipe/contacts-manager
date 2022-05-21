@@ -2,9 +2,10 @@ import { faClose, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Head from "next/head";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ContactList from "../components/ContactList";
 import CreateContact from "../components/CreateContact";
+import { axiosCallHandler } from "../infra/axiosHelper";
 import {
   AddContact,
   Box,
@@ -19,7 +20,6 @@ import {
   TextContainer,
   Wrapper
 } from "../styles/styles";
-import { contactsMock } from "../__mocks__/contactsMock";
 
 const addContactImage = "/assets/add_image.svg";
 const chatImage = "/assets/chat_image.svg";
@@ -27,6 +27,28 @@ const chatImage = "/assets/chat_image.svg";
 const Home = () => {
   const [addContact, setAddContact] = useState<boolean>(false);
   const [selectedContact, setSelectedContact] = useState<Contact | null>(null);
+  const [contactsList, setContactsList] = useState<Contact[] | []>([]);
+  const [error, setError] = useState("");
+
+  const fetchContacts = () => {
+    axiosCallHandler({
+      method: "get",
+    })
+      .then((APIResponse) => {
+        APIResponse["response"] !== null
+          ? setContactsList(APIResponse.response as Contact[])
+          : setContactsList([]);
+      })
+      .catch((err) =>
+        setError(
+          "There was an error while loading the contacts. Try again later."
+        )
+      );
+  };
+
+  useEffect(() => {
+    fetchContacts();
+  }, []);
   return (
     <>
       <Head>
@@ -41,7 +63,7 @@ const Home = () => {
       <Wrapper>
         <ContactList
           disabled={addContact}
-          contacts={contactsMock}
+          contacts={contactsList}
           onSelect={(contact) => setSelectedContact(contact)}
         />
         <Container>
@@ -116,7 +138,10 @@ const Home = () => {
 
           {addContact ? (
             <AddContact data-testid="add-contact">
-              <CreateContact onClose={() => setAddContact(false)} />
+              <CreateContact
+                onClose={() => setAddContact(false)}
+                onCreate={fetchContacts}
+              />
             </AddContact>
           ) : null}
         </Container>

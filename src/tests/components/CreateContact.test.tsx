@@ -6,13 +6,13 @@ describe("Test CreateContact component", () => {
   
   it("Should render CreateContact component", async () => {
     act(() => {
-      render(<CreateContact onClose={() => jest.fn} />);
+      render(<CreateContact onCreate={() => jest.fn()} onClose={() => jest.fn} />);
     });
     expect(screen.findByText("Add a new contact")).toBeTruthy();
   });
 
   it("Should enable the button once all fields are filled", () => {
-    render(<CreateContact onClose={() => jest.fn} />);
+    render(<CreateContact onCreate={() => jest.fn()} onClose={() => jest.fn} />);
     const nameInput = screen.getByTestId("field-name");
     const emailInput = screen.getByTestId("field-email");
     const phoneInput = screen.getByTestId("field-phone");

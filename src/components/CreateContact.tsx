@@ -15,9 +15,10 @@ import Modal from "./Modal";
 
 type CreateContactProps = {
   onClose: () => void;
+  onCreate: Function;
 };
 
-const CreateContact = ({ onClose }: CreateContactProps) => {
+const CreateContact = ({ onClose, onCreate }: CreateContactProps) => {
   const [contact, setContact] = useState<ContactFields>({
     email: "",
     name: "",
@@ -27,7 +28,6 @@ const CreateContact = ({ onClose }: CreateContactProps) => {
     null
   );
 
-  const [modalOpened, setModalOpened] = useState<boolean>(false);
   const handleButtonEnable = (schema: ContactFields) => {
     if (!schema.email || !schema.name || !schema.phone) return true;
     return false;
@@ -43,8 +43,11 @@ const CreateContact = ({ onClose }: CreateContactProps) => {
         name: contact.name,
       },
     })
-      .then((APIResponse) => console.log("res", APIResponse))
-      .catch((err) => console.log("Err", err));
+      .then((APIResponse) => {
+        setSuccessfulSubmit(true);
+      })
+      .catch((err) => setSuccessfulSubmit(false));
+    onCreate();
     setContact({ email: "", name: "", phone: "" });
   };
   return (
@@ -98,16 +101,12 @@ const CreateContact = ({ onClose }: CreateContactProps) => {
         >
           Create
         </Button>
-
-        <Button onClick={() => setModalOpened(true)} context="create">
-          Abrir modal
-        </Button>
       </CreateContactLower>
 
       <Modal
-        onClose={(status) => setModalOpened(!status)}
+        onClose={(status) => setSuccessfulSubmit(!status)}
         title={successfulSubmit ? "Success!" : "Opps"}
-        isOpen={modalOpened}
+        isOpen={successfulSubmit!}
         text={
           successfulSubmit
             ? "Have you already thought on what will be the matter of your first talk with the contact you just created? What about Pagaleve?"
