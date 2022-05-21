@@ -14,7 +14,7 @@ const ContactList = ({ contacts, disabled, onSelect }: ContactListProps) => {
           Contacts
         </Text>
         <ul>
-          {contacts.length > 0 ? (
+          {contacts && contacts.length > 0 ? (
             contacts.map((contact) => (
               <ContactCard
                 imageUrl={contact.imageUrl}

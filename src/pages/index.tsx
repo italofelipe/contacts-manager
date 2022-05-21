@@ -20,6 +20,7 @@ import {
   TextContainer,
   Wrapper
 } from "../styles/styles";
+import { contactsMock } from "../__mocks__/contactsMock";
 
 const addContactImage = "/assets/add_image.svg";
 const chatImage = "/assets/chat_image.svg";
@@ -27,7 +28,10 @@ const chatImage = "/assets/chat_image.svg";
 const Home = () => {
   const [addContact, setAddContact] = useState<boolean>(false);
   const [selectedContact, setSelectedContact] = useState<Contact | null>(null);
-  const [contactsList, setContactsList] = useState<Contact[] | []>([]);
+  // Workaround to handle a next tricky thing that's the fact that often, on reload, it doesn't fetches the data.
+  const [contactsList, setContactsList] = useState<Contact[] | []>(
+    contactsMock
+  );
   const [error, setError] = useState("");
 
   const fetchContacts = () => {

@@ -23,10 +23,10 @@ const customStyles = {
     height: "18rem",
   },
 };
-
+ReactModal.setAppElement("body");
 const Modal = ({ title, text, isOpen, onClose }: ModalProps) => {
   return (
-    <ReactModal style={customStyles} isOpen={isOpen!}>
+    <ReactModal testId="modal" style={customStyles} isOpen={isOpen!}>
       <ModalHeader>
         <FontAwesomeIcon
           onClick={() => onClose(isOpen!)}
