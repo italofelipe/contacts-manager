@@ -2,7 +2,7 @@ import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
 import { axiosCallHandler } from "../../infra/axiosHelper";
 
-const mockedBaseURL = "/users.json";
+const mockedBaseURL = "/contacts";
 
 let mock: MockAdapter;
 

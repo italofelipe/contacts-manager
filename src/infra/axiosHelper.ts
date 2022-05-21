@@ -1,6 +1,4 @@
 import axios from "axios";
-import { envMapper } from "./envMapper";
-import Firebase from "./firebase";
 import RequestData from "./request";
 
 type HttpRequest = {
@@ -9,15 +7,12 @@ type HttpRequest = {
 };
 
 export const axiosCallHandler = async (requestData: HttpRequest) => {
-  const endpoint = new Firebase(envMapper).endpointURL;
-  axios.defaults.baseURL = endpoint;
-
-
+  axios.defaults.baseURL = "/api";
 
   switch (requestData.method) {
     case "get":
       try {
-        const response = await axios.get<Contact[]>("/users.json");
+        const response = await axios.get("/contacts");
         const responseObj = new RequestData({
           response: response.data,
           error: false,
@@ -25,8 +20,6 @@ export const axiosCallHandler = async (requestData: HttpRequest) => {
         });
 
         return responseObj.getRequestData();
-
-        
       } catch (error) {
         const responseObj = new RequestData({
           response: null,
@@ -37,7 +30,7 @@ export const axiosCallHandler = async (requestData: HttpRequest) => {
       }
     case "post":
       try {
-        const response = await axios.post("/users.json", {
+        const response = await axios.post("/contacts", {
           email: requestData.data!.email,
           phone: requestData.data!.phone,
           name: requestData.data!.name,
@@ -59,7 +52,7 @@ export const axiosCallHandler = async (requestData: HttpRequest) => {
     case "put":
       try {
         const response = await axios.put(
-          `/users.json/${requestData.data!.id}`,
+          `/contacts${requestData.data!.id}`,
           {
             email: requestData.data!.email,
             phone: requestData.data!.phone,
@@ -83,7 +76,7 @@ export const axiosCallHandler = async (requestData: HttpRequest) => {
     default:
       try {
         const response = await axios.delete(
-          `/users.json/${requestData.data!.id}`
+          `/contacts${requestData.data!.id}`
         );
         const responseObj = new RequestData({
           response: response.data,
