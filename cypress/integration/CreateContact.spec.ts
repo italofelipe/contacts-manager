@@ -13,13 +13,15 @@ describe("The creation of a contact screen", () => {
     cy.get("button").should("be.disabled");
   });
 
-  it("Should fill the form and the button must be enabled", () => {
+  it("Should fill the form and the button must be enabled, and upon click, a modal must be shown", () => {
     cy.get("input[data-testid=field-name]").click().type("Thanos de Tita");
     cy.get("input[data-testid=field-email]")
       .click()
       .type("thanos@darkorder.net");
     cy.get("input[data-testid=field-phone]").click().type("987654567");
 
-    cy.get("button[data-testid=create-button]").should("be.enabled");
+    cy.get("button[data-testid=create-button]").should("be.enabled").click();
+
+    cy.get("div[data-testid=modal]").should("be.visible")
   });
 });
