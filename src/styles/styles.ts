@@ -202,10 +202,11 @@ const ContactCardLower = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
-  flex-flow: row;
+  flex-flow: column;
   justify-content: center;
-  align-items: end;
-  div {
+  align-items: center;
+  div:nth-child(2) {
+    margin-top: 3em;
     background: #ef5350;
     width: 5em;
     height: 5em;

@@ -16,14 +16,22 @@ import Modal from "./Modal";
 type CreateContactProps = {
   onClose: () => void;
   onCreate: Function;
+  context: "create" | "update";
+  defaultValues?: Contact;
 };
 
-const CreateContact = ({ onClose, onCreate }: CreateContactProps) => {
+const CreateContact = ({
+  onClose,
+  onCreate,
+  context,
+  defaultValues,
+}: CreateContactProps) => {
   const [contact, setContact] = useState<ContactFields>({
     email: "",
     name: "",
     phone: "",
   });
+  const [newValues, setNewValue] = useState<Contact | undefined>(defaultValues);
   const [successfulSubmit, setSuccessfulSubmit] = useState<boolean | null>(
     null
   );
@@ -35,29 +43,49 @@ const CreateContact = ({ onClose, onCreate }: CreateContactProps) => {
 
   const handleSubmit = (formEvent: FormEvent) => {
     formEvent.preventDefault();
-    axiosCallHandler({
-      method: "post",
-      data: {
-        email: contact.email,
-        phone: contact.phone,
-        name: contact.name,
-      },
-    })
-      .then((APIResponse) => {
-        setSuccessfulSubmit(true);
+    if (context === "create") {
+      axiosCallHandler({
+        method: "post",
+        data: {
+          email: contact.email,
+          phone: contact.phone,
+          name: contact.name,
+        },
       })
-      .catch((err) => setSuccessfulSubmit(false));
+        .then((APIResponse) => {
+          setSuccessfulSubmit(true);
+        })
+        .catch((err) => setSuccessfulSubmit(false));
+    } else {
+      console.log("Caiu no Else", newValues)
+      axiosCallHandler({
+        method: "put",
+        data: {
+          email: contact.email,
+          phone: contact.phone,
+          name: contact.name,
+          id: defaultValues?.id,
+        },
+      })
+        .then((APIResponse) => {
+          setSuccessfulSubmit(true);
+        })
+        .catch((err) => setSuccessfulSubmit(false));
+    }
+
     onCreate();
     setContact({ email: "", name: "", phone: "" });
   };
   return (
     <>
-      <CreateContactUpper>
-        <Text align="center" size="md" variant="info">
-          Add a new contact
-        </Text>
-        <FontAwesomeIcon onClick={() => onClose()} icon={faClose} size="xs" />
-      </CreateContactUpper>
+      {context === "update" ? null : (
+        <CreateContactUpper>
+          <Text align="center" size="md" variant="info">
+            Add a new contact
+          </Text>
+          <FontAwesomeIcon onClick={() => onClose()} icon={faClose} size="xs" />
+        </CreateContactUpper>
+      )}
 
       <CreateContactInner>
         <FormWrapper onSubmit={(formEvent) => handleSubmit(formEvent)}>
@@ -66,8 +94,12 @@ const CreateContact = ({ onClose, onCreate }: CreateContactProps) => {
             type="text"
             maxLength={40}
             name={contact.name}
-            value={contact.name}
-            onChange={(e) => setContact({ ...contact, name: e.target.value })}
+            value={defaultValues ? newValues!.name : contact.name}
+            onChange={(e) =>
+              context === "update"
+                ? setNewValue({ ...defaultValues!, name: e.target.value })
+                : setContact({ ...contact, name: e.target.value })
+            }
             autoFocus
             data-testid="field-name"
           />
@@ -76,8 +108,12 @@ const CreateContact = ({ onClose, onCreate }: CreateContactProps) => {
             type="text"
             maxLength={40}
             name={contact.email}
-            value={contact.email}
-            onChange={(e) => setContact({ ...contact, email: e.target.value })}
+            value={defaultValues ? newValues!.email : contact.email}
+            onChange={(e) =>
+              context === "update"
+                ? setNewValue({ ...defaultValues!, email: e.target.value })
+                : setContact({ ...contact, email: e.target.value })
+            }
             data-testid="field-email"
           />
           <TextInput
@@ -85,8 +121,12 @@ const CreateContact = ({ onClose, onCreate }: CreateContactProps) => {
             type="text"
             maxLength={20}
             name={contact.phone}
-            value={contact.phone}
-            onChange={(e) => setContact({ ...contact, phone: e.target.value })}
+            value={defaultValues ? newValues!.phone : contact.phone}
+            onChange={(e) =>
+              context === "update"
+                ? setNewValue({ ...defaultValues!, phone: e.target.value })
+                : setContact({ ...contact, phone: e.target.value })
+            }
             data-testid="field-phone"
           />
         </FormWrapper>
@@ -96,7 +136,9 @@ const CreateContact = ({ onClose, onCreate }: CreateContactProps) => {
           type="submit"
           onClick={(e) => handleSubmit(e)}
           data-testid="create-button"
-          disabled={handleButtonEnable(contact)}
+          disabled={handleButtonEnable(
+            context === "create" ? contact : newValues!
+          )}
           context="create"
         >
           Create
@@ -107,6 +149,7 @@ const CreateContact = ({ onClose, onCreate }: CreateContactProps) => {
         onClose={(status) => setSuccessfulSubmit(!status)}
         title={successfulSubmit ? "Success!" : "Opps"}
         isOpen={successfulSubmit!}
+        context={"create"}
         text={
           successfulSubmit
             ? "Have you already thought on what will be the matter of your first talk with the contact you just created? What about Pagaleve?"

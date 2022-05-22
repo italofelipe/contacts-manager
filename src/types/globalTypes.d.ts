@@ -25,3 +25,8 @@ interface IRequestData {
   error: unknown;
   loading: boolean;
 }
+
+type HttpRequest = {
+  method: "get" | "post" | "put" | "delete";
+  data?: Contact;
+};
