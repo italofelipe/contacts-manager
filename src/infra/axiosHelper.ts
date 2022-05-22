@@ -1,13 +1,8 @@
 import axios from "axios";
 import RequestData from "./request";
 
-type HttpRequest = {
-  method: "get" | "post" | "put" | "delete";
-  data?: Contact;
-};
-
 export const axiosCallHandler = async (requestData: HttpRequest) => {
-  axios.defaults.baseURL = "/api";
+  axios.defaults.baseURL = "https://telephonist.herokuapp.com";
 
   switch (requestData.method) {
     case "get":
@@ -51,14 +46,11 @@ export const axiosCallHandler = async (requestData: HttpRequest) => {
       }
     case "put":
       try {
-        const response = await axios.put(
-          `/contacts${requestData.data!.id}`,
-          {
-            email: requestData.data!.email,
-            phone: requestData.data!.phone,
-            name: requestData.data!.name,
-          }
-        );
+        const response = await axios.put(`/contacts/${requestData.data!.id}`, {
+          email: requestData.data!.email,
+          phone: requestData.data!.phone,
+          name: requestData.data!.name,
+        });
         const responseObj = new RequestData({
           response: response.data,
           error: false,
@@ -75,9 +67,7 @@ export const axiosCallHandler = async (requestData: HttpRequest) => {
       }
     default:
       try {
-        const response = await axios.delete(
-          `/contacts${requestData.data!.id}`
-        );
+        const response = await axios.delete(`/contacts/${requestData.data!.id}`);
         const responseObj = new RequestData({
           response: response.data,
           error: false,
