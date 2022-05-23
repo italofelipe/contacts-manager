@@ -111,7 +111,11 @@ const Home = () => {
         )}
 
         <Container>
-          <Box w={addContact ? "part" : "full"} disabled={addContact}>
+          <Box
+            w={addContact ? "part" : "full"}
+            disabled={addContact}
+            updateContact={Boolean(selectedContact)}
+          >
             <TextContainer>
               <H2Title align="center">Telephonist</H2Title>
               <Text align="center" size="md" variant="text">
@@ -174,7 +178,6 @@ const Home = () => {
         </Container>
 
         <Modal
-          context={changeContact ? changeContact!.context : "initial"}
           isOpen={changeContact ? changeContact!.modalOpened : false}
           onClose={() => setChangeContact(null)}
           text={`${

@@ -1,5 +1,6 @@
 import { faClose } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Image from "next/image";
 import { FormEvent, useState } from "react";
 import { axiosCallHandler } from "../infra/axiosHelper";
 import {
@@ -12,6 +13,7 @@ import {
   TextInput
 } from "../styles/styles";
 import Modal from "./Modal";
+const taklImage = "/assets/talk_image.svg";
 
 type CreateContactProps = {
   onClose: () => void;
@@ -56,6 +58,7 @@ const CreateContact = ({
       })
         .then((APIResponse) => {
           setSuccessfulSubmit(true);
+          onCreate();
         })
         .catch((err) => setSuccessfulSubmit(false));
     } else {
@@ -143,10 +146,18 @@ const CreateContact = ({
           )}
           context="create"
         >
-          Create
+          {context === "create" ? "Create" : "Update"}
         </Button>
+        {context === "create" && (
+          <Image
+            src={taklImage}
+            width={300}
+            height={380}
+            alt="People talking to each other"
+          />
+        )}
       </CreateContactLower>
-
+      <button onClick={() => setSuccessfulSubmit(true)}>Abrir modal</button>
       <Modal
         onClose={(status) => {
           setSuccessfulSubmit(!status);
@@ -154,10 +165,11 @@ const CreateContact = ({
         }}
         title={successfulSubmit ? "Success!" : "Opps"}
         isOpen={successfulSubmit!}
-        context={"create"}
         text={
-          successfulSubmit
+          successfulSubmit && context === "create"
             ? "Have you already thought on what will be the matter of your first talk with the contact you just created? What about Pagaleve?"
+            : successfulSubmit && context === "create"
+            ? "Contact updated!"
             : "Opps"
         }
       />

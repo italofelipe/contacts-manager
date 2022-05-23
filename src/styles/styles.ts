@@ -1,3 +1,4 @@
+import ReactModal from "react-modal";
 import styled from "styled-components";
 
 type Align = "center" | "left" | "right";
@@ -24,10 +25,10 @@ type IButton = {
 const Button = styled.button<IButton>`
   padding: 0.6em 2em;
   font-size: 1em;
-  background: ${({ context }) => (context === "add" ? "#64b5f6" : "#43A047")};
+  background: ${({ context }) => (context === "add" ? "#6C63FF" : "#43A047")};
   color: #fafafa;
   font-weight: bold;
-  max-width: 150px;
+  max-width: 10rem;
   border-radius: 6em;
   border: none;
   &:hover {
@@ -69,11 +70,13 @@ const Container = styled.div`
   display: flex;
   flex-flow: row;
   width: 100%;
+  height: 100vh;
 `;
 
 type IBox = {
   w: "full" | "part";
   disabled: boolean;
+  updateContact: boolean;
 };
 const Box = styled.div<IBox>`
   display: flex;
@@ -81,13 +84,13 @@ const Box = styled.div<IBox>`
   flex-flow: column;
   justify-content: space-between;
   align-items: center;
-  margin: 15px 10px;
+  padding: 1.2em;
   box-shadow: 0px 0px 12px 3px #dedede;
   opacity: ${({ disabled }) => (disabled ? "0.45" : "unset")};
   pointer-events: ${({ disabled }) => (disabled ? "none" : "unset")};
 
   @media (min-width: ${mediaQueries.xsMin}px) and (max-width: ${mediaQueries.smMin}px) {
-    display: ${({ w }) => (w === "full" ? "flex" : "none")};
+    display: ${({ updateContact }) => (updateContact ? "flex" : "none")};
   }
 `;
 
@@ -205,9 +208,8 @@ const ContactRight = styled.div`
   padding-right: 1em;
 
   svg {
-    max-width: 10px;
-
-    margin-top: 1.2em;
+    max-width: 0.6rem;
+    margin-top: 1rem;
   }
 `;
 
@@ -265,6 +267,12 @@ const TextInput = styled.input`
   border: none;
   border-bottom: 1px solid #9e9e9e;
   margin: 15px 0;
+  padding: 0.5em;
+
+  &:focus {
+    border-bottom: 2px solid #6c63ff;
+    border: none;
+  }
 `;
 
 const CreateContactUpper = styled.div`
@@ -297,6 +305,10 @@ const CreateContactLower = styled.div`
   display: flex;
   flex-flow: column;
   align-items: center;
+
+  img {
+    opacity: 0.6;
+  }
 `;
 
 const ModalHeader = styled.div`
@@ -348,6 +360,31 @@ const RoundedButton = styled.button<IRoundedButton>`
   }
 `;
 
+ReactModal.setAppElement("body");
+
+const StyledModal = styled<any>(ReactModal)`
+  position: absolute;
+  border: 1px solid rgb(204, 204, 204);
+  border-radius: 4px;
+  outline: none;
+  padding: 20px;
+  width: 25rem;
+  max-height: 35vh;
+  right: 30vw;
+  top: 25vh;
+  border: 2px solid #81c784;
+  background-color: #81c784;
+
+  @media (min-width: ${mediaQueries.xsMin}px) and (max-width: ${mediaQueries.xsMax}px) {
+    right: 2.5rem;
+
+  }
+  @media (min-width: ${mediaQueries.smMin}px) and (max-width: ${mediaQueries.smMax}px) {
+    right: 5.5rem;
+
+  }
+`;
+
 export {
   Button,
   AddContact,
@@ -370,6 +407,7 @@ export {
   FormWrapper,
   H2Title,
   ModalHeader,
+  StyledModal,
   Text,
   TextInput,
   TextContainer,
