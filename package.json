@@ -14,6 +14,7 @@
     "test:coverage": "jest --coverage=true",
     "test:watch": "jest --watch",
     "cy": "cypress open",
+    "cy:record": "cypress run --record --key 557c19c1-9d62-46ea-959f-ade5309910df",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
   },

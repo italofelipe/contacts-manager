@@ -258,10 +258,7 @@ const TextInput = styled.input`
   border: none;
   border-bottom: 1px solid #9e9e9e;
   margin: 15px 0;
-  &:focus {
-    padding: 5px 0px 0px 5px;
-    font-size: 2em;
-  }
+ 
 `;
 
 const CreateContactUpper = styled.div`
