@@ -1,6 +1,8 @@
+import { faAdd } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Head from "next/head";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import ContactList from "../components/ContactList";
 import CreateContact from "../components/CreateContact";
 import Modal from "../components/Modal";
@@ -12,6 +14,7 @@ import {
   Button,
   Container,
   H2Title,
+  RoundedButton,
   Text,
   TextContainer,
   Wrapper
@@ -24,9 +27,7 @@ const Home = () => {
   const [addContact, setAddContact] = useState<boolean>(false);
   const [selectedContact, setSelectedContact] = useState<Contact | null>(null);
   // Workaround to handle a next tricky thing that's the fact that often, on reload, it doesn't fetches the data.
-  const [contactsList, setContactsList] = useState<Contact[] | []>(
-    []
-  );
+  const [contactsList, setContactsList] = useState<Contact[] | []>([]);
 
   const [changeContact, setChangeContact] = useState<{
     contact: Contact;
@@ -35,7 +36,7 @@ const Home = () => {
   } | null>(null);
   const [error, setError] = useState("");
 
-  const fetchContacts = () => {
+  const fetchContacts = useCallback(() => {
     axiosCallHandler({
       method: "get",
     })
@@ -49,15 +50,15 @@ const Home = () => {
           "There was an error while loading the contacts. Try again later."
         )
       );
-  };
+  }, []);
   const handleDeleteOrUpdateContact = (
     operation: HttpRequest["method"],
     contact: Contact
   ) => {
-    console.log("Bateu no handler", { operation, contact });
     axiosCallHandler({ method: operation, data: contact })
       .then(() => {
         setChangeContact({ contact, context: "delete", modalOpened: true });
+        setSelectedContact(null);
         return fetchContacts();
       })
       .catch(() =>
@@ -69,7 +70,7 @@ const Home = () => {
 
   useEffect(() => {
     fetchContacts();
-  }, []);
+  }, [fetchContacts ]);
   return (
     <>
       <Head>
@@ -83,10 +84,23 @@ const Home = () => {
 
       <Wrapper>
         <ContactList
-          disabled={addContact}
+          disabled={addContact || !!selectedContact}
           contacts={contactsList}
           onSelect={(contact) => setSelectedContact(contact)}
         />
+
+        {!addContact && (
+          <>
+            <RoundedButton variant="add" className="add-responsive">
+              <FontAwesomeIcon
+                onClick={() => setAddContact(true)}
+                icon={faAdd}
+                size="xs"
+              />
+            </RoundedButton>
+          </>
+        )}
+
         <Container>
           <Box w={addContact ? "part" : "full"} disabled={addContact}>
             <TextContainer>
@@ -109,13 +123,12 @@ const Home = () => {
               />
             ) : selectedContact ? (
               <SelectedContact
-                onCreate={fetchContacts}
+                onCreate={() => {
+                  fetchContacts();
+                }}
                 onClose={() => setSelectedContact(null)}
                 onDelete={() =>
                   handleDeleteOrUpdateContact("delete", selectedContact)
-                }
-                onUpdate={() =>
-                  handleDeleteOrUpdateContact("put", selectedContact)
                 }
                 selectedContact={selectedContact}
               />
@@ -143,7 +156,7 @@ const Home = () => {
               <CreateContact
                 context="create"
                 onClose={() => setAddContact(false)}
-                onCreate={fetchContacts}
+                onCreate={() => fetchContacts()}
               />
             </AddContact>
           ) : null}

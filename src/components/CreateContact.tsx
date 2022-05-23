@@ -57,7 +57,6 @@ const CreateContact = ({
         })
         .catch((err) => setSuccessfulSubmit(false));
     } else {
-      console.log("Caiu no Else", newValues)
       axiosCallHandler({
         method: "put",
         data: {
@@ -68,7 +67,9 @@ const CreateContact = ({
         },
       })
         .then((APIResponse) => {
-          setSuccessfulSubmit(true);
+          setTimeout(() => {
+            setSuccessfulSubmit(true);
+          }, 500);
         })
         .catch((err) => setSuccessfulSubmit(false));
     }

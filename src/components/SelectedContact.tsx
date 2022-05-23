@@ -1,19 +1,18 @@
-import { faClose, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faClose, faPencil, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import {
-  Button,
   ContactCard,
   ContactCardInnerContent,
   ContactCardLower,
   ContactCardUpper,
+  RoundedButton,
   Text
 } from "../styles/styles";
 import CreateContact from "./CreateContact";
 
 type SelectedContactsProps = {
   onDelete: () => void;
-  onUpdate: () => void;
   onClose: () => void;
   selectedContact: Contact;
   onCreate: Function;
@@ -22,10 +21,8 @@ const SelectedContact = ({
   onClose,
   onCreate,
   onDelete,
-  onUpdate,
   selectedContact,
 }: SelectedContactsProps) => {
-  console.log("SelectedContact", selectedContact);
   const [update, setUpdate] = useState(false);
 
   return (
@@ -34,7 +31,6 @@ const SelectedContact = ({
         <FontAwesomeIcon onClick={() => onClose()} icon={faClose} size="xs" />
       </ContactCardUpper>
       <ContactCard>
-        <button onClick={() => setUpdate(!update)}>Editar</button>
         <ContactCardInnerContent>
           {update ? null : (
             <>
@@ -61,22 +57,24 @@ const SelectedContact = ({
         </ContactCardInnerContent>
 
         <ContactCardLower>
-          <div>
-            <Button
-              context="add"
-              onClick={() => onUpdate()}
-              data-testid="add-contact-button"
-            >
-              Update Contact
-            </Button>
-          </div>
-          <div>
+          <>
+            {!update && (
+              <RoundedButton variant="update">
+                <FontAwesomeIcon
+                  onClick={() => setUpdate(!update)}
+                  icon={faPencil}
+                  size="xs"
+                />
+              </RoundedButton>
+            )}
+          </>
+          <RoundedButton variant="delete">
             <FontAwesomeIcon
               onClick={() => onDelete()}
               icon={faTrash}
               size="xs"
             />
-          </div>
+          </RoundedButton>
         </ContactCardLower>
       </ContactCard>
     </>

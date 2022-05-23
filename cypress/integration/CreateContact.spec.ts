@@ -21,7 +21,15 @@ describe("The creation of a contact screen", () => {
     cy.get("input[data-testid=field-phone]").click().type("987654567");
 
     cy.get("button[data-testid=create-button]").should("be.enabled").click();
-
-    cy.get("div[data-testid=modal]").should("be.visible")
+    cy.intercept("POST", "/contacts", (req) => {
+      req.body = {
+        email: "thanos@darkorder.net",
+        phone: "987654567",
+        name: "Thanos de Tita",
+      };
+    }).as("create");
+    const estimatedMaxResponseTime = 6000;
+    cy.wait(estimatedMaxResponseTime);
+    cy.get("div[data-testid=modal]").should("be.visible");
   });
 });

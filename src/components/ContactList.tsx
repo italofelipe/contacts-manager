@@ -9,7 +9,7 @@ interface ContactListProps {
 const ContactList = ({ contacts, disabled, onSelect }: ContactListProps) => {
   return (
     <>
-      <Aside disabled={disabled}>
+      <Aside disabled={disabled} className={disabled ? "disabled" : ""}>
         <Text align="left" size="md" variant="text">
           Contacts
         </Text>

@@ -25,13 +25,13 @@ const ContactCard = ({
         <ContactPhotoContainer photo={imageUrl!} />
       </ContactLeft>
       <ContactCenter>
-        <Text align="left" size="md" variant="text">
+        <Text align="left" size="sm" variant="text">
           {name}
         </Text>
-        <Text align="left" size="sm" variant="info">
+        <Text align="left" size="xs" variant="info">
           {email}
         </Text>
-        <Text align="left" size="sm" variant="info">
+        <Text align="left" size="xs" variant="info">
           {phone}
         </Text>
       </ContactCenter>
