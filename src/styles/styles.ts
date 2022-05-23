@@ -100,7 +100,7 @@ const Text = styled.p<IText>`
   font-size: ${(props) => {
     switch (props.size) {
       case "xs":
-        return "0.75em";
+        return "0.75rem";
       case "sm":
         return "1em";
       case "md":
@@ -140,15 +140,21 @@ const Aside = styled.aside<IAside>`
   opacity: ${({ disabled }) => (disabled ? "0.45" : "unset")};
   pointer-events: ${({ disabled }) => (disabled ? "none" : "unset")};
 
-  @media (min-width: ${mediaQueries.xsMin}px) and (max-width: ${mediaQueries.smMin}px) {
+  @media (min-width: ${mediaQueries.xsMin}px) and (max-width: ${mediaQueries.xsMax}px) {
     width: 100%;
     height: auto;
     &.disabled {
       display: none;
     }
   }
+  @media (min-width: ${mediaQueries.smMin}px) and (max-width: ${mediaQueries.smMax}px) {
+    width: 80vw;
+    &.disabled {
+      display: none;
+    }
+  }
   ul {
-    overflow: scroll;
+    overflow: auto;
   }
 `;
 
@@ -196,6 +202,7 @@ const ContactRight = styled.div`
 
   align-items: center;
   justify-content: end;
+  padding-right: 1em;
 
   svg {
     max-width: 10px;
@@ -258,7 +265,6 @@ const TextInput = styled.input`
   border: none;
   border-bottom: 1px solid #9e9e9e;
   margin: 15px 0;
- 
 `;
 
 const CreateContactUpper = styled.div`

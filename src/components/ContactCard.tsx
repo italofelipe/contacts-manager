@@ -22,7 +22,9 @@ const ContactCard = ({
   return (
     <Contact onClick={onSelect}>
       <ContactLeft>
-        <ContactPhotoContainer photo={imageUrl!} />
+        <ContactPhotoContainer
+          photo={imageUrl ? imageUrl! : "/assets/photoless_image.jpg"}
+        />
       </ContactLeft>
       <ContactCenter>
         <Text align="left" size="sm" variant="text">
