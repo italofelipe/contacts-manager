@@ -2,7 +2,9 @@ import axios from "axios";
 import RequestData from "./request";
 
 export const axiosCallHandler = async (requestData: HttpRequest) => {
-  axios.defaults.baseURL = "https://telephonist.herokuapp.com";
+  axios.defaults.baseURL = process.env.NODE_ENV !== "development" ?
+   "https://telephonist.herokuapp.com" : "http://localhost:4000/";
+    console.log("Process", process)
 
   switch (requestData.method) {
     case "get":
