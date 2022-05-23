@@ -2,7 +2,7 @@ import { faAdd } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Head from "next/head";
 import Image from "next/image";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import ContactList from "../components/ContactList";
 import CreateContact from "../components/CreateContact";
 import Modal from "../components/Modal";
@@ -68,9 +68,22 @@ const Home = () => {
       );
   };
 
+  const contactListMemo = useMemo(() => {
+    return (
+      <ContactList
+        disabled={addContact || !!selectedContact}
+        contacts={contactsList}
+        onSelect={(contact) => setSelectedContact(contact)}
+      />
+    );
+  }, [contactsList, selectedContact, addContact]);
+
   useEffect(() => {
     fetchContacts();
-  }, [fetchContacts ]);
+  }, [fetchContacts]);
+  useEffect(() => {
+    contactListMemo;
+  }, [contactListMemo, contactsList]);
   return (
     <>
       <Head>
@@ -83,11 +96,7 @@ const Home = () => {
       </Head>
 
       <Wrapper>
-        <ContactList
-          disabled={addContact || !!selectedContact}
-          contacts={contactsList}
-          onSelect={(contact) => setSelectedContact(contact)}
-        />
+        {contactListMemo}
 
         {!addContact && (
           <>
@@ -124,7 +133,9 @@ const Home = () => {
             ) : selectedContact ? (
               <SelectedContact
                 onCreate={() => {
-                  fetchContacts();
+                  setTimeout(() => {
+                    return fetchContacts();
+                  }, 500);
                 }}
                 onClose={() => setSelectedContact(null)}
                 onDelete={() =>

@@ -1,6 +1,6 @@
 import { faClose, faPencil, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   ContactCard,
   ContactCardInnerContent,
@@ -24,7 +24,40 @@ const SelectedContact = ({
   selectedContact,
 }: SelectedContactsProps) => {
   const [update, setUpdate] = useState(false);
+  const [updatedValues, setUpdatedValues] = useState<Contact | null>(null);
+  useEffect(() => {}, [updatedValues]);
 
+  const updatedValuesMemo = useMemo(() => {
+    if (updatedValues && !update) {
+      return (
+        <>
+          <Text size="lg" align="center" variant="text">
+            {updatedValues.name}
+          </Text>
+          <Text size="lg" align="center" variant="info">
+            {updatedValues.phone}
+          </Text>
+          <Text size="lg" align="center" variant="info">
+            {updatedValues.email}
+          </Text>
+        </>
+      );
+    } else if (!update && !updatedValues) {
+      return (
+        <>
+          <Text size="lg" align="center" variant="text">
+            {selectedContact.name}
+          </Text>
+          <Text size="lg" align="center" variant="info">
+            {selectedContact.phone}
+          </Text>
+          <Text size="lg" align="center" variant="info">
+            {selectedContact.email}
+          </Text>
+        </>
+      );
+    } else return null;
+  }, [update, selectedContact, updatedValues]);
   return (
     <>
       <ContactCardUpper>
@@ -32,23 +65,14 @@ const SelectedContact = ({
       </ContactCardUpper>
       <ContactCard>
         <ContactCardInnerContent>
-          {update ? null : (
-            <>
-              <Text size="lg" align="center" variant="text">
-                {selectedContact.name}
-              </Text>
-              <Text size="lg" align="center" variant="info">
-                {selectedContact.phone}
-              </Text>
-              <Text size="lg" align="center" variant="info">
-                {selectedContact.email}
-              </Text>
-            </>
-          )}
-
+          {updatedValuesMemo}
           {update && (
             <CreateContact
-              defaultValues={selectedContact}
+              onUpdate={(newContactValue) => {
+                setUpdate(false);
+                setUpdatedValues(newContactValue);
+              }}
+              defaultValues={updatedValues ? updatedValues : selectedContact}
               onClose={() => setUpdate(!update)}
               onCreate={onCreate}
               context="update"
@@ -61,7 +85,7 @@ const SelectedContact = ({
             {!update && (
               <RoundedButton variant="update">
                 <FontAwesomeIcon
-                  onClick={() => setUpdate(!update)}
+                  onClick={() => setUpdate(true)}
                   icon={faPencil}
                   size="xs"
                 />

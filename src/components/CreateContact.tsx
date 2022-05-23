@@ -18,13 +18,15 @@ type CreateContactProps = {
   onCreate: Function;
   context: "create" | "update";
   defaultValues?: Contact;
+  onUpdate?: (newContactValue: Contact) => void;
 };
 
 const CreateContact = ({
-  onClose,
-  onCreate,
   context,
   defaultValues,
+  onClose,
+  onCreate,
+  onUpdate,
 }: CreateContactProps) => {
   const [contact, setContact] = useState<ContactFields>({
     email: "",
@@ -60,16 +62,15 @@ const CreateContact = ({
       axiosCallHandler({
         method: "put",
         data: {
-          email: contact.email,
-          phone: contact.phone,
-          name: contact.name,
+          email: newValues!.email,
+          phone: newValues!.phone,
+          name: newValues!.name,
           id: defaultValues?.id,
         },
       })
         .then((APIResponse) => {
-          setTimeout(() => {
-            setSuccessfulSubmit(true);
-          }, 500);
+          setSuccessfulSubmit(true);
+          onUpdate!(newValues!);
         })
         .catch((err) => setSuccessfulSubmit(false));
     }
@@ -147,7 +148,10 @@ const CreateContact = ({
       </CreateContactLower>
 
       <Modal
-        onClose={(status) => setSuccessfulSubmit(!status)}
+        onClose={(status) => {
+          setSuccessfulSubmit(!status);
+          onClose();
+        }}
         title={successfulSubmit ? "Success!" : "Opps"}
         isOpen={successfulSubmit!}
         context={"create"}
