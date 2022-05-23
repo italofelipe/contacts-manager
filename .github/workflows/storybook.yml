@@ -11,6 +11,11 @@ jobs:
       - name: Install dependencies
         run: yarn
 
+
+      - uses: actions/checkout@v1
+      - name: Install dependencies
+        run: echo "The secrets are:${{secrets.CHROMATIC_PROJECT_TOKEN}}" 
+
       - name: Publish to Chromatic
         uses: chromaui/action@v1
         with:
