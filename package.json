@@ -16,7 +16,8 @@
     "cy": "cypress open",
     "cy:record": "cypress run --record --key 557c19c1-9d62-46ea-959f-ade5309910df",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "chromatic": "npx chromatic --exit-zero-on-changes"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.1.1",
@@ -63,6 +64,7 @@
     "axios-mock-adapter": "^1.20.0",
     "babel-loader": "^8.2.5",
     "babel-plugin-styled-components": "^2.0.7",
+    "chromatic": "^6.5.4",
     "cypress": "^9.6.1",
     "eslint": "8.15.0",
     "eslint-config-next": "12.1.6",
