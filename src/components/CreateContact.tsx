@@ -157,7 +157,6 @@ const CreateContact = ({
           />
         )}
       </CreateContactLower>
-      <button onClick={() => setSuccessfulSubmit(true)}>Abrir modal</button>
       <Modal
         onClose={(status) => {
           setSuccessfulSubmit(!status);
