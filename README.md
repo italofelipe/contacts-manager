@@ -11,28 +11,34 @@ An agenda application made with Next.js, Styled Components, JSON Server and Type
 - Once you ran the commands above, you're ready to use the application!
 
 ## Links for the production app:
+
 Application: https://telephonist.vercel.app/
+
 Storybook: https://628bfcb5167ffb004a5d2a0a-xirhscprfm.chromatic.com/?path=/story/button--button-create
 
 ### Bonuses checklist
 
-[x] Showcase your front end skills with animations, transitions or effects
-[x] Applying a design system and brand
-[x] Configure a CI/CD pipeline
-[-] Infrastructure automation
-[] A/B testing frameworks
-[-] Logging, auditing and monitoring of web usage
-[] Make both web and mobile apps
+[ x ] - Showcase your front end skills with animations, transitions or effects
+[ x ] - Applying a design system and brand.  
+[ x ] - Configure a CI/CD pipeline.  
+[ - ] - Infrastructure automation.  
+[ ] - A/B testing frameworks.  
+[ - ] - Logging, auditing and monitoring of web usage.  
+[ - ] - Make both web and mobile apps.
 
+      [-] = Partially done
+      [X] = Done
+      [] = Not done at all
 
 # Behind the scenes:
 
 At first, I focused my efforts on setting up the development environment, which consists of:
+
 - Set up project (Next JS)
 - Set up test runner (Jest) and test library (React Testing Library)
-- Set up git hooks (Husky, lint-staged and @commitlint 
+- Set up git hooks (Husky, lint-staged and @commitlint)
 - Set up gloal styles (like css reset) with Styled Components
-- Configure the _app.tsx page, which is the custom entrypoint for Next apps.
+- Configure the \_app.tsx page, which is the custom entrypoint for Next apps.
 - Set up Cypress
 - Set up CI/CD (GitHub Actions) jobs in the yml file
 - Set up Storybook
