@@ -20,7 +20,7 @@ const ContactCard = ({
   onSelect,
 }: ContactCardProps) => {
   return (
-    <Contact onClick={onSelect}>
+    <Contact data-testId={"contact-card"} onClick={onSelect}>
       <ContactLeft>
         <ContactPhotoContainer
           photo={imageUrl ? imageUrl! : "/assets/photoless_image.jpg"}

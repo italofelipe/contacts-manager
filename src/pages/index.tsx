@@ -45,11 +45,14 @@ const Home = () => {
           ? setContactsList(APIResponse.response as Contact[])
           : setContactsList([]);
       })
-      .catch(() =>
+      .catch((err) => {
         setError(
           "There was an error while loading the contacts. Try again later."
-        )
-      );
+        );
+        throw new Error(
+          "There was an error while loading the contacts. Try again later."
+        );
+      });
   }, []);
   const handleDeleteOrUpdateContact = (
     operation: HttpRequest["method"],
@@ -61,11 +64,14 @@ const Home = () => {
         setSelectedContact(null);
         return fetchContacts();
       })
-      .catch(() =>
+      .catch((err) => {
         setError(
           "There was an error while loading the contacts. Try again later."
-        )
-      );
+        );
+        throw new Error(
+          "There was an error while deleting the contacts. Try again later."
+        );
+      });
   };
 
   const contactListMemo = useMemo(() => {

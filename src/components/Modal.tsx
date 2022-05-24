@@ -18,6 +18,7 @@ const Modal = ({ isOpen, onClose, title, text }: ModalProps) => {
           icon={faClose}
           size="xs"
           fill="#F5F5F5"
+          data-testId="close-modal-icon"
         />
       </ModalHeader>
 

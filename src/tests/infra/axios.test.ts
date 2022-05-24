@@ -1,6 +1,7 @@
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
 import { axiosCallHandler } from "../../infra/axiosHelper";
+jest.unmock("axios")
 
 const mockedBaseURL = "/contacts";
 

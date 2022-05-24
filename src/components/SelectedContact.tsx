@@ -63,7 +63,7 @@ const SelectedContact = ({
       <ContactCardUpper>
         <FontAwesomeIcon onClick={() => onClose()} icon={faClose} size="xs" />
       </ContactCardUpper>
-      <ContactCard>
+      <ContactCard data-testId="selected-contact-card">
         <ContactCardInnerContent>
           {updatedValuesMemo}
           {update && (
@@ -83,21 +83,21 @@ const SelectedContact = ({
         <ContactCardLower>
           <>
             {!update && (
-              <RoundedButton variant="update">
-                <FontAwesomeIcon
-                  onClick={() => setUpdate(true)}
-                  icon={faPencil}
-                  size="xs"
-                />
+              <RoundedButton
+                onClick={() => setUpdate(true)}
+                data-testId="selected-update-contact"
+                variant="update"
+              >
+                <FontAwesomeIcon icon={faPencil} size="xs" />
               </RoundedButton>
             )}
           </>
-          <RoundedButton variant="delete">
-            <FontAwesomeIcon
-              onClick={() => onDelete()}
-              icon={faTrash}
-              size="xs"
-            />
+          <RoundedButton
+            onClick={() => onDelete()}
+            data-testId="selected-delete-contact"
+            variant="delete"
+          >
+            <FontAwesomeIcon icon={faTrash} size="xs" />
           </RoundedButton>
         </ContactCardLower>
       </ContactCard>

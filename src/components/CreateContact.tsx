@@ -93,7 +93,7 @@ const CreateContact = ({
       )}
 
       <CreateContactInner>
-        <FormWrapper onSubmit={(formEvent) => handleSubmit(formEvent)}>
+        <FormWrapper data-testId="create-form" onSubmit={(formEvent) => handleSubmit(formEvent)}>
           <TextInput
             placeholder="Thanos"
             type="text"
